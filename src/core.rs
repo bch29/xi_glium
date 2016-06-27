@@ -120,19 +120,79 @@ impl Core {
         self.call_edit("open", Some(ObjectBuilder::new().insert("filename", filename).unwrap()));
     }
 
-    pub fn left(&mut self) { self.call_edit("move_left", None); }
-    pub fn left_sel(&mut self) { self.call_edit("move_left_and_modify_selection", None); }
+    pub fn left(&mut self) {
+        self.call_edit(
+            "move",
+            Some(ObjectBuilder::new()
+                 .insert("motion", "prev_char")
+                 .insert("modify_selection", false)
+                 .unwrap()));
+    }
 
-    pub fn right(&mut self) { self.call_edit("move_right", None); }
-    pub fn right_sel(&mut self) { self.call_edit("move_right_and_modify_selection", None); }
+    pub fn left_sel(&mut self) {
+        self.call_edit(
+            "move",
+            Some(ObjectBuilder::new()
+                 .insert("motion", "prev_char")
+                 .insert("modify_selection", true)
+                 .unwrap()));
+    }
 
-    pub fn up(&mut self) { self.call_edit("move_up", None); }
-    pub fn up_sel(&mut self) { self.call_edit("move_up_and_modify_selection", None); }
+    pub fn right(&mut self) {
+        self.call_edit(
+            "move",
+            Some(ObjectBuilder::new()
+                 .insert("motion", "next_char")
+                 .insert("modify_selection", false)
+                 .unwrap()));
+    }
 
-    pub fn down(&mut self) { self.call_edit("move_down", None); }
-    pub fn down_sel(&mut self) { self.call_edit("move_down_and_modify_selection", None); }
+    pub fn right_sel(&mut self) {
+        self.call_edit(
+            "move",
+            Some(ObjectBuilder::new()
+                 .insert("motion", "next_char")
+                 .insert("modify_selection", true)
+                 .unwrap()));
+    }
 
-    pub fn del(&mut self) { self.call_edit("delete_backward", None); }
+    pub fn up(&mut self) {
+        self.call_edit(
+            "move",
+            Some(ObjectBuilder::new()
+                 .insert("motion", "prev_line")
+                 .insert("modify_selection", false)
+                 .unwrap()));
+    }
+
+    pub fn up_sel(&mut self) {
+        self.call_edit(
+            "move",
+            Some(ObjectBuilder::new()
+                 .insert("motion", "prev_line")
+                 .insert("modify_selection", true)
+                 .unwrap()));
+    }
+
+    pub fn down(&mut self) {
+        self.call_edit(
+            "move",
+            Some(ObjectBuilder::new()
+                 .insert("motion", "next_line")
+                 .insert("modify_selection", false)
+                 .unwrap()));
+    }
+
+    pub fn down_sel(&mut self) {
+        self.call_edit(
+            "move",
+            Some(ObjectBuilder::new()
+                 .insert("motion", "next_line")
+                 .insert("modify_selection", true)
+                 .unwrap()));
+    }
+
+    pub fn del(&mut self) { self.call_edit("delete", Some(ObjectBuilder::new().insert("motion", "prev_char").unwrap())); }
 
     pub fn page_up(&mut self) { self.call_edit("page_up", None); }
     pub fn page_up_sel(&mut self) { self.call_edit("page_up_and_modify_selection", None); }
